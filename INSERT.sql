@@ -16,13 +16,13 @@ INSERT INTO albums (title, release_year) VALUES
     ('The Mountain', 2018);
 
 INSERT INTO tracks (title, duration, album_id) VALUES
-    ('Спи моя радость усни', 190, 1),       
+    ('Спи моя радость усни', 190, 1),
     ('Доченьки мои', 225, 1),
-    ('Mirrorball', 208, 2),  
+    ('Mirrorball', 208, 2),
     ('August', 240, 2),
-    ('Heat Above', 342, 3), 
-    ('Broken Bells', 350, 3);
-    ('The Mountain', 284, 4), 
+    ('Heat Above', 342, 3),
+    ('Broken Bells', 350, 3),
+    ('The Mountain', 284, 4),
     ('My Religion', 185, 4);
 
 INSERT INTO compilations (title, release_year) VALUES
@@ -32,13 +32,13 @@ INSERT INTO compilations (title, release_year) VALUES
     ('The best country', 2018);
 
 INSERT INTO artist_genre (artist_id, genre_id) VALUES
-    (1, 1),  
-    (2, 1),  
-    (3, 3), 
-    (4, 3); 
+    (1, 1),
+    (2, 1),
+    (3, 3),
+    (4, 3);
 
 INSERT INTO artist_album (artist_id, album_id) VALUES
-    (1, 1), 
+    (1, 1),
     (2, 2),
     (3, 3),
     (4, 4);
