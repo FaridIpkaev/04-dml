@@ -17,49 +17,47 @@ WHERE name NOT LIKE '% %';
 
 SELECT title 
 FROM tracks 
-WHERE LOWER(title) LIKE '%my%' OR LOWER(title) LIKE '%мой%';
+WHERE title ILIKE 'my%'
+   OR title ILIKE '%my'
+   OR title ILIKE '%my%'
+   OR title ILIKE 'my'
+   OR title ILIKE 'мой%'
+   OR title ILIKE '%мой'
+   OR title ILIKE '%мой%'
+   OR title ILIKE 'мой';
 
-SELECT g.name AS genre, COUNT(ag.artist_id) AS artist_count
-FROM genres g
-LEFT JOIN artist_genre ag ON g.genre_id = ag.genre_id
-GROUP BY g.name
+SELECT Genres.name, COUNT(ExecuterGenres.executor_id) AS artist_count
+FROM Genres
+LEFT JOIN ExecuterGenres ON Genres.genres_id = ExecuterGenres.genres_id
+GROUP BY Genres.name
 ORDER BY artist_count DESC;
 
-SELECT COUNT(t.track_id) AS track_count
-FROM tracks t
-JOIN albums a ON t.album_id = a.album_id
-WHERE a.release_year BETWEEN 2019 AND 2020;
+SELECT COUNT(Track.track_id)
+FROM Track
+JOIN Album ON Track.album_id = Album.album_id
+WHERE Album.release_year BETWEEN 2019 AND 2020;
 
-SELECT a.title AS album, 
-       ROUND(AVG(t.duration), 2) AS avg_duration_sec,
-       CONCAT(ROUND(AVG(t.duration)/60, 2), ' min') AS avg_duration_min
-FROM albums a
-JOIN tracks t ON a.album_id = t.album_id
-GROUP BY a.title;
+SELECT Album.title, 
+       AVG(rack.duration)
+FROM Track
+JOIN Album ON Track.album_id = Album.album_id
+GROUP BY lbum.title
+ORDER BY 
+    AVG(Track.duration) DESC;
 
-SELECT ar.name AS artist
-FROM artists ar
-WHERE ar.artist_id NOT IN (
-    SELECT aa.artist_id
-    FROM artist_album aa
-    JOIN albums al ON aa.album_id = al.album_id
-    WHERE al.release_year = 2020
-);
+SELECT Executor.name
+FROM Executor
+WHERE Executor.executor_id NOT IN (
+    SELECT ExecuterAlbum.executor_id
+    FROM ExecuterAlbum
+    JOIN Album ON ExecuterAlbum.album_id = Album.album_id
+    WHERE Album.release_year = 2020);
 
-SELECT DISTINCT c.title AS compilation
-FROM compilations c
-JOIN comp_track ct ON c.comp_id = ct.comp_id
-JOIN tracks t ON ct.track_id = t.track_id
-JOIN albums a ON t.album_id = a.album_id
-JOIN artist_album aa ON a.album_id = aa.album_id
-JOIN artists ar ON aa.artist_id = ar.artist_id
-WHERE ar.name = 'Алсу';
-
-SELECT DISTINCT c.title AS compilation
-FROM compilations c
-JOIN comp_track ct ON c.comp_id = ct.comp_id
-JOIN tracks t ON ct.track_id = t.track_id
-JOIN albums a ON t.album_id = a.album_id
-JOIN artist_album aa ON a.album_id = aa.album_id
-JOIN artists ar ON aa.artist_id = ar.artist_id
-WHERE ar.name = 'Алсу';
+SELECT DISTINCT Collection.title
+FROM Collection
+JOIN CollectionTrack ON Collection.collection_id = CollectionTrack.collection_id
+JOIN Track ON CollectionTrack.track_id = Track.track_id
+JOIN Album ON Track.album_id = Album.album_id
+JOIN ExecuterAlbum ON Album.album_id = ExecuterAlbum.album_id
+JOIN Executor ON ExecuterAlbum.executor_id = Executor.executor_id
+WHERE Executor.name = 'Алсу';
