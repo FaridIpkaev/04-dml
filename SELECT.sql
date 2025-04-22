@@ -1,29 +1,29 @@
 SELECT title, duration 
-FROM tracks 
+FROM track 
 ORDER BY duration DESC 
 LIMIT 1;
 
 SELECT title 
-FROM tracks 
+FROM track 
 WHERE duration >= 210;
 
 SELECT title 
-FROM compilations 
+FROM collection 
 WHERE release_year BETWEEN 2018 AND 2020;
 
 SELECT name 
-FROM artists 
+FROM executor 
 WHERE name NOT LIKE '% %';
 
 SELECT title 
-FROM tracks 
-WHERE title ILIKE 'my%'
-   OR title ILIKE '%my'
-   OR title ILIKE '%my%'
+FROM track 
+WHERE title ILIKE 'my %'
+   OR title ILIKE '% my'
+   OR title ILIKE '% my %'
    OR title ILIKE 'my'
-   OR title ILIKE 'мой%'
-   OR title ILIKE '%мой'
-   OR title ILIKE '%мой%'
+   OR title ILIKE 'мой %'
+   OR title ILIKE '% мой'
+   OR title ILIKE '% мой %'
    OR title ILIKE 'мой';
 
 SELECT Genres.name, COUNT(ExecuterGenres.executor_id) AS artist_count
@@ -38,10 +38,10 @@ JOIN Album ON Track.album_id = Album.album_id
 WHERE Album.release_year BETWEEN 2019 AND 2020;
 
 SELECT Album.title, 
-       AVG(rack.duration)
+       AVG(Track.duration)
 FROM Track
 JOIN Album ON Track.album_id = Album.album_id
-GROUP BY lbum.title
+GROUP BY Album.title
 ORDER BY 
     AVG(Track.duration) DESC;
 
@@ -61,3 +61,4 @@ JOIN Album ON Track.album_id = Album.album_id
 JOIN ExecuterAlbum ON Album.album_id = ExecuterAlbum.album_id
 JOIN Executor ON ExecuterAlbum.executor_id = Executor.executor_id
 WHERE Executor.name = 'Алсу';
+    
